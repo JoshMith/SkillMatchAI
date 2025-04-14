@@ -1,0 +1,46 @@
+<!-- forgot-password.component.html -->
+<div class="forgot-password-container">
+    <div class="branding-panel">
+        <div class="branding-content">
+            <h1 class="app-title">SkillMatch AI</h1>
+            <p class="app-tagline">Reset your password easily</p>
+        </div>
+    </div>
+
+    <div class="form-panel">
+        <div class="form-container">
+            <h2 class="form-title">Forgot Password?</h2>
+            <p class="form-description">
+                Enter your email and we'll send you instructions to reset your password
+            </p>
+
+            <form [formGroup]="forgotPasswordForm" (ngSubmit)="onSubmit()" class="reset-form">
+                <div class="form-field">
+                    <label for="email" class="field-label">Email Address</label>
+                    <input type="email" id="email" formControlName="email" placeholder="example@company.com"
+                        class="form-input"
+                        [ngClass]="{'invalid': forgotPasswordForm.get('email')?.invalid && forgotPasswordForm.get('email')?.touched}">
+                    <small class="error-message"
+                        *ngIf="forgotPasswordForm.get('email')?.invalid && forgotPasswordForm.get('email')?.touched">
+                        Please enter a valid email address
+                    </small>
+                </div>
+
+                <button type="submit" class="submit-button" [disabled]="forgotPasswordForm.invalid || isSubmitted">
+                    Send Reset Instructions
+                </button>
+
+                <button type="button" class="back-button" (click)="backToLogin()">
+                    Back to Login
+                </button>
+            </form>
+
+            <div class="support-info">
+                <p>
+                    Didn't receive the email? Check your spam folder or
+                    <a routerLink="/contact-us" (click)="contactSupport()" class="support-link">contact support</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

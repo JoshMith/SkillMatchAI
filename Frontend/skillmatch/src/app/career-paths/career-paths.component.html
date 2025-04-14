@@ -1,0 +1,112 @@
+<!-- career-paths.component.html -->
+<div class="dashboard-container">
+    <div class="sidebar">
+        <div class="logo">
+            <h2>SkillMatch AI</h2>
+        </div>
+        <nav class="menu">
+            <div class="menu-item" (click)="navigate('dashboard')">Dashboard</div>
+            <div class="menu-item" (click)="navigate('profile')">Profile</div>
+            <div class="menu-item" (click)="navigate('job-matches')">Job matches</div>
+            <div class="menu-item" (click)="navigate('analytic')">Analytic</div>
+            <div class="menu-item active" (click)="navigate('career-paths')">Career Paths</div>
+            <div class="menu-item" (click)="navigate('settings')">Settings</div>
+        </nav>
+        <div class="user-profile">
+            <div class="user-avatar"></div>
+            <span>User</span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header class="content-header">
+            <h1>Skills Analytics</h1>
+            <div class="career-goal">
+                Career Goal:
+                <span class="goal-value">{{ careerGoal }}</span>
+                <span class="arrow">&#9668;</span>
+            </div>
+        </header>
+
+        <div class="career-path-section">
+            <!-- Career Progress Path -->
+            <div class="path-container">
+                <div class="position-card current">
+                    <h3 class="position-title">{{ currentPosition.title }}</h3>
+                    <p class="position-timeline">{{ currentPosition.timeInPosition }}</p>
+                    <div class="skills-list">
+                        <div class="skill-item" *ngFor="let skill of currentPosition.skills">
+                            <span>{{ skill.name }}</span>
+                            <span class="skill-level">{{ skill.level }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="path-arrow">
+                    <span class="arrow-line"></span>
+                    <span class="arrow-head">&#9654;</span>
+                </div>
+
+                <div class="position-card next">
+                    <h3 class="position-title">{{ nextPosition.title }}</h3>
+                    <p class="position-timeline">{{ nextPosition.estimatedTimeline }}</p>
+                    <p class="position-salary">{{ nextPosition.salary }}</p>
+                </div>
+
+                <div class="path-arrow">
+                    <span class="arrow-line"></span>
+                    <span class="arrow-head">&#9654;</span>
+                </div>
+
+                <div class="position-card goal">
+                    <h3 class="position-title">{{ goalPosition.title }}</h3>
+                    <p class="position-timeline">{{ goalPosition.estimatedTimeline }}</p>
+                    <p class="position-salary">{{ goalPosition.salary }}</p>
+                </div>
+            </div>
+
+            <!-- Skills Development Path -->
+            <div class="skills-development">
+                <h3>Skills Development Path</h3>
+                <div class="skills-grid">
+                    <div class="skills-column">
+                        <h4>Current Skills</h4>
+                        <div class="skill-card" *ngFor="let skill of currentPosition.skills">
+                            <span>{{ skill.name }}</span>
+                            <span class="level">{{ skill.level }}</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-column">
+                        <h4>Skills to Develop</h4>
+                        <div class="skill-card develop" *ngFor="let skill of skillsToDevelop">
+                            <span>{{ skill.name }}</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-column">
+                        <h4>Senior Role Skills</h4>
+                        <div class="skill-card senior" *ngFor="let skill of seniorRoleSkills">
+                            <span>{{ skill.name }}</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-column">
+                        <h4>Recommended Resources</h4>
+                        <div class="skill-card resource" *ngFor="let resource of recommendedResources">
+                            <span>{{ resource.name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Industry Insights -->
+            <div class="industry-insights">
+                <h3>Industry Insights</h3>
+                <div class="chart-container">
+                    <div class="trend-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

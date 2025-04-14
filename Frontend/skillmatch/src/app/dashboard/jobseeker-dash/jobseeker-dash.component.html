@@ -1,0 +1,46 @@
+<!-- dashboard.component.html -->
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Dashboard</h1>
+        <p>Welcome back, {{username}}! Here is your overview.</p>
+    </div>
+
+    <div class="stats-container">
+        <div class="stats-card">
+            <h3>Public Strength</h3>
+            <div class="stats-value">{{publicStrength}}%</div>
+        </div>
+
+        <div class="stats-card">
+            <h3>Job Matches</h3>
+            <div class="stats-value">{{jobMatches}}</div>
+        </div>
+
+        <div class="stats-card">
+            <h3>Active Applications</h3>
+            <div class="stats-value">{{activeApplications}}</div>
+        </div>
+    </div>
+
+    <div class="jobs-container">
+        <h2>Recommended Jobs</h2>
+
+        <div class="job-cards">
+            <div class="job-card" *ngFor="let job of recommendedJobs">
+                <div class="job-details">
+                    <h3>{{job.title}}</h3>
+                    <p class="job-company">
+                        {{job.company}}
+                        <ng-container *ngIf="job.remote"> • Remote</ng-container>
+                        <ng-container *ngIf="job.location"> • {{job.location}}</ng-container>
+                        <ng-container *ngIf="job.salaryRange"> • {{job.salaryRange}}</ng-container>
+                    </p>
+                    <p class="skills-match">Skills Match: {{job.skillsMatch}}%</p>
+                </div>
+                <div class="job-action">
+                    <button class="apply-button" (click)="applyForJob(job)">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

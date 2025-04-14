@@ -1,0 +1,67 @@
+<!-- skillmatch.component.html -->
+<div class="skillmatch-container">
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <a href="/" class="logo-text">SkillMatch AI</a>
+        </div>
+        <div class="auth-buttons">
+            <button class="btn login-btn" (click)="navigateToLogin()">Login</button>
+            <button class="btn signup-btn" (click)="navigateToSignUp()">Sign Up</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Find Jobs Based On<br><span class="highlight">Your Skills</span></h1>
+            <p>SkillMatch AI uses artificial intelligence to match your skills with the perfect job opportunities.</p>
+            <button class="btn get-started-btn" (click)="getStarted()">Get Started</button>
+        </div>
+        <div class="hero-image">
+            <!-- Placeholder for hero image -->
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+
+        <div class="steps-container">
+            <div class="step-card" type="button" (click)="navigateToProfile()">
+                <div class="step-number">1</div>
+                <h3>Create Profile</h3>
+                <p>Add your skills and experience</p>
+            </div>
+            <div class="step-card" type="button" (click)="navigateToExploreJobs()">
+                <div class="step-number">2</div>
+                <h3>Explore Jobs</h3>
+                <p>Browse job opportunities tailored to your skills</p>
+            </div>
+
+            <div class="step-card" type="button" (click)="navigateToGetMatched()">
+                <div class="step-number">3</div>
+                <h3>Get Matched</h3>
+                <p>AI analyzes your skills and finds matches</p>
+            </div>
+
+            <div class="step-card" type="button" (click)="navigateToApply()">
+                <div class="step-number">4</div>
+                <h3>Apply & Interview</h3>
+                <p>Apply to jobs and get interview invitations</p>
+            </div>
+            <!-- <div class="step-card" type="button" (click)="navigateToChatbot()">
+                <div class="step-number">5</div>
+                <h3>Chat with AI</h3>
+                <p>Get personalized career advice from our AI chatbot</p>
+            </div> -->
+
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 SkillMatch AI | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a></p>
+    </footer>
+</div>

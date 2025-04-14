@@ -1,0 +1,396 @@
+/* profile-creation.component.scss */
+:host {
+    display: block;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.profile-creation-container {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    background-color: white;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    .app-title {
+        color: #2065d1;
+        margin: 0;
+        font-size: 24px;
+    }
+}
+
+.form-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.form-header {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+
+    h2 {
+        margin: 0 0 8px;
+        font-size: 22px;
+        color: #333;
+    }
+
+    p {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+    }
+}
+
+.progress-container {
+    padding: 0 20px;
+
+    .progress-bar {
+        width: 100%;
+        height: 8px;
+        background-color: #e1e1e1;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 8px;
+
+        .progress {
+            height: 100%;
+            background-color: #2065d1;
+            transition: width 0.3s ease;
+        }
+    }
+
+    .steps {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        .step {
+            flex: 1;
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            padding: 5px 0;
+
+            &.active {
+                color: #2065d1;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+.form-step {
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.form-group {
+    margin-bottom: 20px;
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+
+        &:focus {
+            outline: none;
+            border-color: #2065d1;
+        }
+
+        &.invalid.touched {
+            border-color: #f44336;
+        }
+
+        &::placeholder {
+            color: #aaa;
+        }
+
+        &:disabled {
+            background-color: #f5f5f5;
+            color: #888;
+        }
+    }
+}
+
+.search-container {
+    margin-bottom: 20px;
+}
+
+.popular-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.skill-pill {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: #e0e0e0;
+    }
+
+    &.selected {
+        background-color: #e3f2fd;
+        color: #2065d1;
+    }
+
+    .remove {
+        margin-left: 6px;
+        font-size: 16px;
+    }
+}
+
+.skills-rating {
+    margin-top: 30px;
+
+    h3 {
+        font-size: 16px;
+        margin-bottom: 15px;
+        font-weight: 500;
+        color: #333;
+    }
+}
+
+.skill-rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .skill-name {
+        width: 100px;
+        font-size: 14px;
+    }
+
+    .slider-container {
+        flex: 1;
+        padding: 0 10px;
+    }
+
+    .proficiency-level {
+        width: 100px;
+        text-align: right;
+        font-size: 14px;
+        color: #666;
+    }
+}
+
+.slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #2065d1;
+        cursor: pointer;
+    }
+
+    &::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #2065d1;
+        cursor: pointer;
+        border: none;
+    }
+
+    &::-webkit-slider-runnable-track {
+        background: #e1e1e1;
+        height: 8px;
+        border-radius: 4px;
+    }
+
+    &::-moz-range-track {
+        background: #e1e1e1;
+        height: 8px;
+        border-radius: 4px;
+    }
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.work-experience-item {
+    position: relative;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    .remove-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #f0f0f0;
+        border: none;
+        font-size: 18px;
+        line-height: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        &:hover {
+            background: #e0e0e0;
+        }
+    }
+}
+
+.date-fields {
+    display: flex;
+    gap: 20px;
+
+    .form-group {
+        flex: 1;
+    }
+}
+
+.current-job-checkbox {
+    margin-top: 5px;
+
+    label {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: normal;
+        cursor: pointer;
+
+        input {
+            width: auto;
+            margin-right: 8px;
+        }
+    }
+}
+
+.add-experience-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: none;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    color: #2065d1;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 30px;
+
+    &:hover {
+        border-color: #bbb;
+        background-color: #f9f9f9;
+    }
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+}
+
+.browse-btn {
+    padding: 8px 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #e9e9e9;
+    }
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.back-btn {
+    padding: 10px 24px;
+    background-color: white;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #f5f5f5;
+    }
+}
+
+.next-btn,
+.complete-btn {
+    padding: 10px 24px;
+    background-color: #2065d1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #1854b4;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

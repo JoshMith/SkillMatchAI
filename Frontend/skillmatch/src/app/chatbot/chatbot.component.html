@@ -1,0 +1,70 @@
+<!-- ai-assistant.component.html -->
+<div class="assistant-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <a href="/" class="logo-text">SkillMatch AI</a>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li *ngFor="let item of sidebarItems" [class.active]="item.active">
+                    <a href="javascript:void(0)">{{ item.name }}</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="ai-assistant-panel">
+            <h1 class="panel-title">AI Assistant</h1>
+            <p class="panel-description">Ask questions about candidates and get instant answers</p>
+
+            <!-- Chat Messages -->
+            <div class="chat-container" #chatContainer>
+                <div *ngFor="let message of chatMessages" class="chat-message" [class.user-message]="message.isUser"
+                    [class.assistant-message]="!message.isUser">
+
+                    <!-- Regular message -->
+                    <div class="message-content">{{ message.text }}</div>
+
+                    <!-- Candidate list (if exists) -->
+                    <div *ngIf="message.isCandidateList && message.candidates?.length" class="candidate-list">
+                        <div *ngFor="let candidate of message.candidates; let i = index" class="candidate-item">
+                            {{ i + 1 }}. {{ candidate.name }} - {{ candidate.level }} ({{ candidate.rating }}) - {{
+                            candidate.experience }}
+                        </div>
+                        <div class="view-all" (click)="viewAllMatches()">View all matches</div>
+                    </div>
+
+                    <div class="message-timestamp">{{ formatTime(message.timestamp) }}</div>
+                </div>
+
+                <!-- Special message for example in the mockup -->
+                <div *ngIf="chatMessages.length === 1" class="chat-message user-message special-request">
+                    <div class="message-content">Show me candidates with React.js skills</div>
+                    <div class="message-timestamp">10:31 AM</div>
+                </div>
+            </div>
+
+            <!-- Message Input -->
+            <div class="message-input-container">
+                <input type="text" class="message-input" placeholder="Type your question..."
+                    [(ngModel)]="currentQuestion" (keyup.enter)="sendMessage()">
+
+                <button class="send-button" [class.loading]="isLoading" (click)="sendMessage()">
+                    <svg *ngIf="!isLoading" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M16 12l-4 4" />
+                        <path d="M16 12H8" />
+                        <path d="M16 12l-4-4" />
+                    </svg>
+                    <div *ngIf="isLoading" class="loading-spinner"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
