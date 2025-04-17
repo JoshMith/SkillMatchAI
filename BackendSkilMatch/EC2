@@ -1,0 +1,16 @@
+#!/bin/bash
+
+## updating packages
+
+sudo yum update -y
+
+## Install docker
+sudo yum -y install docker
+
+## start docker
+
+sudo service docker start
+
+## create container
+
+sudo docker run -d  -p 80:80 ndambuki/backendusers

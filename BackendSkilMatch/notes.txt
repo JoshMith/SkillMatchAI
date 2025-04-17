@@ -1,0 +1,125 @@
+we started by creating the normal tables users and events 
+-- CREATE TABLE users (
+--     id SERIAL PRIMARY KEY,
+--     name VARCHAR(100) NOT NULL,
+--     email VARCHAR(100) UNIQUE NOT NULL,
+--     password VARCHAR(255) NOT NULL,
+--     created_at TIMESTAMP DEFAULT NOW(),
+--     updated_at TIMESTAMP DEFAULT NOW()
+-- )
+
+-- CREATE TABLE events (
+--     id SERIAL PRIMARY KEY,
+--     title VARCHAR(150) NOT NULL,
+--     location VARCHAR(150) NOT NULL,
+--     date TIMESTAMP NOT NULL,
+--     price DECIMAL(10,2) CHECK (price >= 0), -- Ensures price is not negative
+--     user_id INT NOT NULL, -- Organizer who created the event
+--     created_at TIMESTAMP DEFAULT NOW(),
+--     updated_at TIMESTAMP DEFAULT NOW(),
+--     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+-- )
+
+-- INSERT INTO users (name, email, password, created_at, updated_at)
+-- VALUES 
+--     ('Alice Johnson', 'alice@example.com', 'hashedpassword1', NOW(), NOW()),
+--     ('Bob Smith', 'bob@example.com', 'hashedpassword2', NOW(), NOW()),
+--     ('Charlie Brown', 'charlie@example.com', 'hashedpassword3', NOW(), NOW()),
+--     ('Diana Prince', 'diana@example.com', 'hashedpassword4', NOW(), NOW()),
+--     ('Ethan Hunt', 'ethan@example.com', 'hashedpassword5', NOW(), NOW());
+
+
+-- INSERT INTO events (title, location, date, price, user_id, created_at, updated_at)
+-- VALUES 
+--     ('Tech Conference 2024', 'Nairobi', '2024-06-15 10:00:00', 50.00, 1, NOW(), NOW()),
+--     ('AI & Machine Learning Summit', 'Lagos', '2024-07-10 09:30:00', 100.00, 2, NOW(), NOW()),
+--     ('Startup Pitch Night', 'Kigali', '2024-08-20 18:00:00', 25.00, 3, NOW(), NOW()),
+--     ('Blockchain Innovations', 'Cape Town', '2024-09-05 14:00:00', 75.00, 4, NOW(), NOW()),
+--     ('Women in Tech Expo', 'Accra', '2024-10-12 11:00:00', 40.00, 5, NOW(), NOW());
+
+
+
+We need to add a User_Role table connected to the user table in 1:N relationship 
+the role_id from Primary key in user_role table is to be a foreign key in users table
+This means we dont need to drop the user table but we need to alter the user table
+
+-- ALTER TABLE users
+-- First add the role_id column to the users table
+ALTER TABLE users
+ADD COLUMN role_id INTEGER;
+
+
+
+-- lets add the role_user table 
+-- Create user_roles table
+-- CREATE TABLE user_roles (
+--     id SERIAL PRIMARY KEY,
+--     role_name VARCHAR(50) UNIQUE NOT NULL,
+--     description TEXT,
+--     created_at TIMESTAMP DEFAULT NOW()
+-- );
+
+-- Insert default roles
+-- INSERT INTO user_roles (role_name, description) VALUES
+-- ('Attendee', 'A regular user who can attend events.'),
+-- ('Organizer', 'A user who can create and manage events.'),
+-- ('Admin', 'The application owner with full access.');
+
+
+-- Then add the foreign key constraint
+-- Add the role_id PK as foreign key in user table 
+ALTER TABLE users
+ADD CONSTRAINT fk_user_role FOREIGN KEY (role_id)
+REFERENCES user_roles(id) ON DELETE SET NULL;
+
+
+🎯 Final Schema Overview
+Table	Columns
+user_roles	id (PK), role_name, description, created_at
+users	id (PK), name, email, password, role_id (FK to user_roles), created_at, updated_at
+events	id (PK), user_id (FK to users), title, location, date, price, created_at, updated_at
+
+
+2️⃣ Test API Endpoints for Each Role
+🟢 Attendee (Jamal)
+✅ GET /api/v1/events → ✅ Success
+✅ GET /api/v1/events/:id → ✅ Success
+❌ POST /api/v1/events → ❌ 403 Forbidden
+❌ PUT /api/v1/events/:id → ❌ 403 Forbidden
+❌ DELETE /api/v1/events/:id → ❌ 403 Forbidden
+
+🟡 Organizer (Miriam)
+✅ POST /api/v1/events → ✅ Success
+✅ GET /api/v1/events → ✅ Success
+✅ PUT /api/v1/events/:id (Only her events) → ✅ Success
+✅ DELETE /api/v1/events/:id (Only her events) → ✅ Success
+❌ DELETE /api/v1/events/:id/admin → ❌ 403 Forbidden
+❌ GET /api/v1/users → ❌ 403 Forbidden
+
+🔴 Admin (John Doe)
+✅ GET /api/v1/users → ✅ Success
+✅ PUT /api/v1/users/:id → ✅ Success
+✅ DELETE /api/v1/users/:id → ✅ Success
+✅ DELETE /api/v1/events/:id/admin → ✅ Success
+
+
+Every table, its a good and highly that you create its types in types folder
+
+
+Why && is Correct
+The condition:
+
+if (req.user.role_name !== "Organizer" && req.user.role_name !== "Admin") {
+This condition checks if the user is not an Organizer and not an Admin.
+
+If both conditions are true (i.e., the user is neither an Organizer nor an Admin), the code inside the if block will execute, denying access.
+
+Why || Would Be Incorrect
+The condition:
+
+if (req.user.role_name !== "Organizer" || req.user.role_name !== "Admin") {
+This condition checks if the user is not an Organizer or not an Admin.
+
+Since a user cannot be both an Organizer and an Admin simultaneously, at least one of these conditions will always be true.
+
+This means the if block will always execute, blocking all users, including Organizers and Admins.
