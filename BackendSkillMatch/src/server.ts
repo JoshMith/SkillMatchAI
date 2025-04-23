@@ -35,7 +35,7 @@ app.use(cookieParser())
 
 app.use(cors({
     origin: "*",
-    methods: "GET, PUT,DELETE",
+    methods: "GET,POST,PUT,DELETE",
     credentials: true //allows cookies and auth headers
 }))
 
