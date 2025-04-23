@@ -21,3 +21,7 @@ sudo docker run -d  -p 3000:3000 megalio254/skillmatch-ai
 ## Running and building docker container
 
 docker compose up --build
+
+
+# Connecting to the EC2 instance
+ssh -i "skillmatch.pem" ec2-user@ec2-51-20-35-31.eu-north-1.compute.amazonaws.com

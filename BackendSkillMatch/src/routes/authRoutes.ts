@@ -3,7 +3,7 @@ import { loginUser, logoutUser, registerUser } from '../controllers/authControll
 
 const router = express.Router()
 
-//public routes 
+//public routes
 router.post("/register", registerUser)
 router.post("/login", loginUser)
 router.post("/logout", logoutUser)

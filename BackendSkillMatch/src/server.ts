@@ -78,7 +78,7 @@ app.get('/', (req, res) => {
   
 
 
-//4. routes 
+//4. routes
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/profiles", profileRoutes)

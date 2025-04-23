@@ -30,18 +30,3 @@ services:
 
 volumes:
   pgdata:
-
-# version: '3.8'
-
-# services:
-#   backend:
-#     build: .
-#     ports:
-#       - "3000:3000"
-#     volumes:
-#       - .:/app
-#       - /app/node_modules
-#     env_file:
-#       - .env
-#     command: npm run start
-
