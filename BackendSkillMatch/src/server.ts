@@ -59,7 +59,7 @@ app.get('/', (req, res) => {
           Discover tailored job opportunities, enhance your skills, and unlock your full potential.<br/>
           Let’s shape your future together!
         </p>
-        <a href="http://51.20.35.31:3000/jobs" style="
+        <a href="http://51.20.35.31:3000/api/jobs" style="
           display: inline-block;
           margin-top: 30px;
           padding: 12px 25px;
