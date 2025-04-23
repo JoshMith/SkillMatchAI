@@ -7,7 +7,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DB_URL=postgres://postgres:root@db:5432/SkillMatchAI
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
