@@ -7,8 +7,8 @@ const router = express.Router()
 
 router.get("/", protect, adminGuard,  getUsers)
 router.get("/:id",protect,  getUserById)
-router.get("/:name",protect,adminGuard, getUserByName)
-router.get("/:email",protect,adminGuard, getUserByEmail)
+router.get("/name/:name",protect,adminGuard, getUserByName)
+router.get("/email/:email",protect,adminGuard, getUserByEmail)
 router.put("/:id",protect,adminGuard, updateUser)
 router.delete("/:id",protect,adminGuard, deleteUser)
 
