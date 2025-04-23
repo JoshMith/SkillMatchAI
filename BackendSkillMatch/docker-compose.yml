@@ -12,6 +12,8 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
+    env_file:
+      - .env
     depends_on:
       - postgres
 
@@ -27,8 +29,6 @@ services:
       POSTGRES_DB: ${DB_NAME}
     volumes:
       - pgdata:/var/lib/postgresql/data
-    env_file:
-      - .env
 
 volumes:
   pgdata:
