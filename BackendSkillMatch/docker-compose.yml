@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  backend:
+    build: .
+    container_name: backendskillmatch-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_URL=postgres://postgres:root@db:5432/SkillMatchAI
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15
+    container_name: skillmatchDatabase
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
+# version: '3.8'
+
+# services:
+#   backend:
+#     build: .
+#     ports:
+#       - "3000:3000"
+#     volumes:
+#       - .:/app
+#       - /app/node_modules
+#     env_file:
+#       - .env
+#     command: npm run start
+

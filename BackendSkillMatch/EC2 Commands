@@ -1,0 +1,23 @@
+#!/bin/bash
+
+## updating packages
+
+sudo yum update -y
+
+## Install docker
+sudo yum -y install docker
+
+## start docker
+
+sudo service docker start
+
+## create container
+
+sudo docker run -d  -p 3000:3000 megalio254/skillmatch-ai
+
+
+
+
+## Running and building docker container
+
+docker compose up --build
