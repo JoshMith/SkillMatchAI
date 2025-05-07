@@ -41,6 +41,124 @@ export const registerUser = asyncHandler(async (req: Request, res: Response, nex
 })
 
 
+export const registerEmployer = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const { companyName, industry, contactName, businessEmail, companySize, password } = req.body;
+
+    // Validate industry
+    const industries: string[] = [
+        'Technology',
+        'Healthcare',
+        'Finance',
+        'Education',
+        'Manufacturing',
+        'Retail',
+        'Hospitality',
+        'Construction',
+        'Transportation',
+        'Media',
+        'Other'
+    ];
+    if (!industries.includes(industry)) {
+        res.status(400).json({ message: "Invalid industry" });
+        return;
+    }
+
+    // Validate company size
+    const companySizes: string[] = [
+        '1-10 employees',
+        '11-50 employees',
+        '51-200 employees',
+        '201-500 employees',
+        '501-1000 employees',
+        '1000+ employees'
+    ];
+    if (!companySizes.includes(companySize)) {
+        res.status(400).json({ message: "Invalid company size" });
+        return;
+    }
+
+    // Check if user exists
+    const userExists = await pool.query("SELECT user_id FROM users WHERE email = $1", [businessEmail]);
+
+    if (userExists.rows.length > 0) {
+        res.status(400).json({ message: "User already exists" });
+        return;
+    }
+
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Insert into users table
+    const newUser = await pool.query(
+        "INSERT INTO users (email, password_hash, role) VALUES ($1, $2, $3) RETURNING *",
+        [businessEmail, hashedPassword, 'Employer']
+    );
+
+    const userId = newUser.rows[0].user_id;
+
+    // Insert into employerProfiles table
+    const newEmployerProfile = await pool.query(
+        `INSERT INTO employerProfiles (user_id, company_name, industry, company_size, description) 
+        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+        [userId, companyName, industry, companySize, `Contact Name: ${contactName}`]
+    );
+
+    // Generate JWT token
+    generateToken(res, userId, 'Employer');
+
+    res.status(201).json({
+        message: "Employer registered successfully",
+        user: newUser.rows[0],
+        employerProfile: newEmployerProfile.rows[0]
+    });
+});
+
+export const registerJobseeker = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const { fullName, email, password, location } = req.body;
+
+    // Split fullName into firstName and lastName
+    const [firstName, ...lastNameParts] = fullName.split(" ");
+    const lastName = lastNameParts.join(" ");
+
+    // Check if user exists
+    const userExists = await pool.query("SELECT user_id FROM users WHERE email = $1", [email]);
+
+    if (userExists.rows.length > 0) {
+        res.status(400).json({ message: "User already exists" });
+        return;
+    }
+
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Insert into users table
+    const newUser = await pool.query(
+        "INSERT INTO users (email, password_hash, role) VALUES ($1, $2, $3) RETURNING *",
+        [email, hashedPassword, 'Jobseeker']
+    );
+
+    const userId = newUser.rows[0].user_id;
+
+    // Insert into jobseekerProfiles table
+    const newJobseekerProfile = await pool.query(
+        `INSERT INTO jobseekerprofiles (user_id, first_name, last_name, location) 
+        VALUES ($1, $2, $3, $4) RETURNING *`,
+        [userId, firstName, lastName, location]
+    );
+
+    // Generate JWT token
+    generateToken(res, userId, 'Jobseeker');
+
+    res.status(201).json({
+        message: "Jobseeker registered successfully",
+        user: newUser.rows[0],
+        jobseekerProfile: newJobseekerProfile.rows[0]
+    });
+});
+
+
 
 export const loginUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
 
