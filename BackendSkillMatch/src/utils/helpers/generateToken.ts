@@ -5,10 +5,10 @@ import jwt from 'jsonwebtoken'
 dotenv.config()
 
 //Debugging  - check if env var are loaded correctly  
-console.log("JWT_SECRET: ", process.env.JWT_SECRET )
-console.log("REFRESH_TOKEN_SECRET: ", process.env.REFRESH_TOKEN_SECRET )
+// console.log("JWT_SECRET: ", process.env.JWT_SECRET )
+// console.log("REFRESH_TOKEN_SECRET: ", process.env.REFRESH_TOKEN_SECRET )
 
-export const generateToken = (res:Response, userId: string, role: string) => {
+export const generateToken = (res: Response, userId: string, role: string) => {
     const jwtSecret = process.env.JWT_SECRET;
     const refreshSecret = process.env.REFRESH_TOKEN_SECRET;
 
@@ -19,11 +19,11 @@ export const generateToken = (res:Response, userId: string, role: string) => {
     try {
         //Lets generate a short - lived acccess token for 15 minutes
         // sign(payload: string | Buffer | object, secretOrPrivateKey: null, options?: jwt.SignOptions & { algorithm: "none"; }): string
-        const accessToken = jwt.sign({userId, role}, jwtSecret, {expiresIn: "60m"})
+        const accessToken = jwt.sign({ userId, role }, jwtSecret, { expiresIn: "60m" })
         //Lets generate a long - lived acccess token for 30days
-        const refreshToken = jwt.sign({userId}, refreshSecret, {expiresIn: "30d"})
+        const refreshToken = jwt.sign({ userId }, refreshSecret, { expiresIn: "30d" })
 
-        //set Access token as HTTP-Only secure cookie 
+        //set Access token as HTTP-Only secure cookie
         res.cookie("access_token", accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development", // Secure in production
@@ -32,8 +32,8 @@ export const generateToken = (res:Response, userId: string, role: string) => {
         });
 
 
-         // Set Refresh Token as HTTP-Only Secure Cookie
-         res.cookie("refresh_token", refreshToken, {
+        // Set Refresh Token as HTTP-Only Secure Cookie
+        res.cookie("refresh_token", refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
             sameSite: "strict",
@@ -41,7 +41,7 @@ export const generateToken = (res:Response, userId: string, role: string) => {
         });
 
 
-        return {accessToken, refreshToken}
+        return { accessToken, refreshToken }
 
     } catch (error) {
         console.error("Error generating JWT:", error);
